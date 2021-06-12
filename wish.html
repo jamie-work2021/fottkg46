@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>內閣們祝福</title>
+    <style>
+        @media screen and (min-width: 200px) and (max-width: 960px) {
+            /* html {
+                font-size: 10px;
+                font-family: 'Noto Serif TC';
+            } */
+
+            a:hover,
+            a:visited,
+            a:focus,
+            a:active,
+            a.active {
+                text-decoration: none;
+            }
+
+            ul,
+            ol,
+            li {
+                list-style-position: inside;
+                list-style: none;
+            }
+
+            body {
+                color: #000;
+                font-size: 14px;
+                line-height: 1.4;
+                display: block;
+                margin: 0;
+                padding: 0;
+                font-family: 'Noto Serif TC', serif;
+                /* background-image: linear-gradient(-245deg, #B7F8DB 0%, #50A7C2 100%); */
+            }
+
+            #container {
+                background: -webkit-linear-gradient(#D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%);
+                height: 2400px;
+            }
+
+            #menuToggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 30px;
+
+                z-index: 1;
+
+                -webkit-user-select: none;
+                user-select: none;
+            }
+
+            #menuToggle a {
+                text-decoration: none;
+                color: #232323;
+
+                transition: color 0.3s ease;
+            }
+
+            #menuToggle a:hover {
+                color: rgb(17, 22, 70);
+            }
+
+
+            #menuToggle input {
+                display: block;
+                width: 40px;
+                height: 32px;
+                position: absolute;
+                top: -7px;
+                left: -5px;
+
+                cursor: pointer;
+
+                opacity: 0;
+                /* hide this */
+                z-index: 2;
+                /* and place it over the hamburger */
+
+                -webkit-touch-callout: none;
+            }
+
+            /*
+ * Just a quick hamburger
+ */
+            #menuToggle span {
+                display: block;
+                width: 33px;
+                height: 4px;
+                margin-bottom: 5px;
+                position: relative;
+
+                background: #cdcdcd;
+                border-radius: 3px;
+
+                z-index: 1;
+
+                transform-origin: 4px 0px;
+
+                transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                    opacity 0.55s ease;
+            }
+
+            #menuToggle span:first-child {
+                transform-origin: 0% 0%;
+            }
+
+            #menuToggle span:nth-last-child(2) {
+                transform-origin: 0% 100%;
+            }
+
+            /* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+            #menuToggle input:checked~span {
+                opacity: 1;
+                transform: rotate(45deg) translate(-2px, -1px);
+                background: #232323;
+            }
+
+            /*
+ * But let's hide the middle one.
+ */
+            #menuToggle input:checked~span:nth-last-child(3) {
+                opacity: 0;
+                transform: rotate(0deg) scale(0.2, 0.2);
+            }
+
+            /*
+ * Ohyeah and the last one should go the other direction
+ */
+            #menuToggle input:checked~span:nth-last-child(2) {
+                transform: rotate(-45deg) translate(0, -1px);
+            }
+
+            /*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+            #menu {
+                position: absolute;
+                width: 300px;
+                margin: -100px 0 0 -50px;
+                padding: 50px;
+                padding-top: 125px;
+
+                background: #ededed96;
+                list-style-type: none;
+                -webkit-font-smoothing: antialiased;
+                /* to stop flickering of text in safari */
+
+                transform-origin: 0% 0%;
+                transform: translate(-100%, 0);
+
+                transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            }
+
+            #menu li {
+                padding: 10px 0;
+                font-size: 22px;
+            }
+
+            /*
+ * And let's slide it in from the left
+ */
+            #menuToggle input:checked~ul {
+                transform: none;
+            }
+
+            /* --------click-try--------- */
+            /* .open {
+                display: block;
+                transition: .3s;
+            } */
+
+            .close {
+                /* transition-duration: 4s;
+                transition-delay: 2s; */
+                display: none;
+            }
+
+
+            /* ----------info------------ */
+            .for46 {
+                padding-top: 50px;
+                text-align: center;
+            }
+
+            .for46 p {
+                font-size: 20px;
+                color: rgb(114, 117, 119);
+            }
+
+            .icon-home {
+                padding: 0;
+                margin: 0;
+                width: 20px;
+                height: 15px;
+            }
+
+            .mini-word {
+                font-size: 14px;
+                color: rgba(158, 158, 158, 0.459);
+            }
+
+            .p1 {
+                margin-top: 15px;
+                text-align: center;
+            }
+
+            .t1 {
+                padding: 10px;
+                margin: 20px auto;
+                text-align: left;
+                width: 60%;
+                background-color: rgba(255, 255, 255, 0.794);
+                border-radius: 10px;
+            }
+
+            .t2 {
+                padding: 10px;
+                margin: 20px auto;
+                text-align: left;
+                width: 60%;
+                background-color: rgba(255, 255, 255, 0.794);
+                border-radius: 10px;
+            }
+
+            .t3 {
+                padding: 10px;
+                margin: 20px auto;
+                text-align: left;
+                width: 60%;
+                background-color: rgba(255, 255, 255, 0.794);
+                border-radius: 10px;
+            }
+
+            .t4 {
+                padding: 10px;
+                margin: 20px auto;
+                text-align: left;
+                width: 60%;
+                background-color: rgba(255, 255, 255, 0.794);
+                border-radius: 10px;
+            }
+
+            .img-container {
+                padding: 10px auto;
+                margin-top: 20px;
+                width: 150px;
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .img-container img {
+                margin: 20px auto;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .b1 {
+                margin: 40px 110px 0 135px;
+                text-align: center;
+                width: 100px;
+                height: 30px;
+                line-height: 1.7;
+                color: aliceblue;
+                background-color: rgba(95, 158, 160, 0.685);
+                border-radius: 10px;
+                border-style: none;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navigation">
+        <div id="menuToggle">
+            <!--
+          A fake / hidden checkbox is used as click reciever,
+          so you can use the :checked selector on it.
+          -->
+            <input type="checkbox" />
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="http://127.0.0.1:5501/graduation.html#">
+                    <li>Home</li>
+                </a>
+                <a href="http://127.0.0.1:5501/wish.html">
+                    <li>內閣祝福</li>
+                </a>
+                <a href="http://127.0.0.1:5501/video.html">
+                    <li>影片</li>
+                </a>
+                <a href="http://127.0.0.1:5501/contact.html">
+                    <li>通訊錄</li>
+                </a>
+
+            </ul>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="for46">
+            <img src="./images/1x/資產 2.png">
+            <p>內閣們的小祝福</p>
+            <div class="mini-word">點擊幹部職位會出現內閣的話</div>
+        </div>
+        <div class="card1 ">
+            <div class="img-container">
+                <img class="img1" src="./images/fang.png">
+
+            </div>
+            <button class="img1 b1">副社長</button>
+            <div class="p1">千芳
+                <svg class="icon-home">
+                    <use xlink:href="./icomoon/symbol-defs.svg#icon-pencil"></use>
+                </svg>
+            </div>
+            <div class="t1 close">
+                哈囉大家，好久不見～
+                <br>
+                恭喜你們畢業了，畢業快樂呀！
+                <br>
+                雖然目前暫時不能聚在一起，
+                <br>
+                但是未來還是有機會再見的
+                <br>
+                祝福你們未來不論工作也好，
+                <br>
+                繼續求學也好，
+                <br>
+                都能夠在喜歡的事情上面發光發熱！
+                <br>
+                有事沒事都可以再找我-u-
+
+            </div>
+        </div>
+        <div class="card1 ">
+            <div class="img-container">
+                <img class="img2" src="./images/shan.png">
+
+            </div>
+            <button class="img2 b1">執行秘書</button>
+            <div class="p1">辰珊
+                <svg class="icon-home">
+                    <use xlink:href="./icomoon/symbol-defs.svg#icon-pencil"></use>
+                </svg>
+            </div>
+            <div class="t2 close">
+                一瞬間你們也畢業了！<br>
+                恭喜你們邁入更殘酷的現實，<br>
+                雖然這次沒辦法到場一起拍照，<br>
+                但希望線上祝福可以給予你們安慰，<br>
+                能在吉他社遇到46，<br>
+                也算是我很大的幸福，<br>
+                祝福你們未來能夠順利，<br>
+                有任何事情都可以找我！<br>
+                會一直為你們加油的！<br>
+                之後再約~~♡
+
+            </div>
+        </div>
+        <div class="card1 ">
+            <div class="img-container">
+                <img class="img3" src="./images/kai.jpeg">
+
+            </div>
+            <button class="img3 b1">總幹事</button>
+            <div class="p1">紹凱
+                <svg class="icon-home">
+                    <use xlink:href="./icomoon/symbol-defs.svg#icon-pencil"></use>
+                </svg>
+            </div>
+            <div class="t3 close">
+                恭喜你們，人生才要開始<br>
+                想要挑戰的生活，去吧<br>
+                想要平順的生活，去吧<br>
+                希望你們可以不畏懼他人眼光活下去<br>
+                追求理想的途中，<br>
+                停下來看看路邊的景色<br>
+                與你身後的朋友與家人<br>
+                還有從前在吉他社天真的自己<br>
+                <br>
+                畢業快樂
+
+            </div>
+        </div>
+        <div class="card1 ">
+            <div class="img-container">
+                <img class="img4" src="./images/han.png">
+
+            </div>
+            <button class="img4 b1">社長</button>
+            <div class="p1">思翰
+                <svg class="icon-home">
+                    <use xlink:href="./icomoon/symbol-defs.svg#icon-pencil"></use>
+                </svg>
+            </div>
+            <div class="t4 close">
+                先祝46的各位畢業快樂(也祝我畢業快樂)
+                時間過得很快，
+                感覺吉他社的生活曾經圍繞在我們的身邊，
+                時間總是繞著它轉
+                曾經忙碌到爆炸的，
+                很在意的，快樂的，吵架的，
+                彷彿都被現在的生活推擠到一個很遠的小點
+                如果有人提起來當年吉他社的生活，
+                那段回憶也許就像是一個很小的宇宙，
+                無法細數裡面像星星般的小事大事，
+                但這些被遺忘的都變成了你成長的人生中一小部分。<br>
+                <br>
+                期望在這個未來浩大的宇宙中，
+                你們都能成為那些發光發熱的星星們
+                不管多遠，
+                都能看到你們光芒，
+                看到你們快樂，
+                我也會快樂的
+                祝你們畢業快樂
+
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $('.img1').on('click', function () {
+            $('.t1').toggleClass('close')
+        })
+        $('.img2').on('click', function () {
+            $('.t2').toggleClass('close');
+            duration: 200;
+        })
+        $('.img3').on('click', function () {
+            $('.t3').toggleClass('close')
+        })
+        $('.img4').on('click', function () {
+            $('.t4').toggleClass('close')
+        })
+
+
+        // $(() => {
+
+        //     $('.t1').hide({
+        //         complete: function () {
+        //             $('.card1').removeClass('hidden');
+        //         }
+        //     });
+
+
+        //     $('img').on('click', function () {
+        //         $(this).find('.t1').slideDown({
+        //             duration: 200
+        //         });
+
+        //     }).on('mouseleave', function () {
+        //         $(this).find('.t1').slideUp({
+        //             duration: 300
+        //         });
+
+        //     });
+
+        // });
+
+
+
+
+    </script>
+</body>
+
+</html>

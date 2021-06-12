@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影片</title>
+    <style>
+        a:hover,
+        a:visited,
+        a:focus,
+        a:active,
+        a.active {
+            text-decoration: none;
+        }
+
+        ul,
+        ol,
+        li {
+            list-style-position: inside;
+            list-style: none;
+        }
+
+        body {
+            color: #000;
+            font-size: 14px;
+            line-height: 1.4;
+            display: block;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Serif TC', serif;
+            /* background-image: linear-gradient(-245deg, #B7F8DB 0%, #50A7C2 100%); */
+        }
+
+        #container {
+            /* background: -webkit-linear-gradient(#e2d1c3 0%, #fdfcfb 50%, #E2E7ED 100%); */
+            background-image: linear-gradient(135deg, #e2d1c3 0%, #fdfcfb 100%);
+            height: 100vh;
+        }
+
+
+        #menuToggle {
+            display: block;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+
+            z-index: 1;
+
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #menuToggle a {
+            text-decoration: none;
+            color: #232323;
+
+            transition: color 0.3s ease;
+        }
+
+        #menuToggle a:hover {
+            color: rgb(17, 22, 70);
+        }
+
+
+        #menuToggle input {
+            display: block;
+            width: 40px;
+            height: 32px;
+            position: absolute;
+            top: -7px;
+            left: -5px;
+
+            cursor: pointer;
+
+            opacity: 0;
+            /* hide this */
+            z-index: 2;
+            /* and place it over the hamburger */
+
+            -webkit-touch-callout: none;
+        }
+
+        /*
+ * Just a quick hamburger
+ */
+        #menuToggle span {
+            display: block;
+            width: 33px;
+            height: 4px;
+            margin-bottom: 5px;
+            position: relative;
+
+            background: #cdcdcd;
+            border-radius: 3px;
+
+            z-index: 1;
+
+            transform-origin: 4px 0px;
+
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                opacity 0.55s ease;
+        }
+
+        #menuToggle span:first-child {
+            transform-origin: 0% 0%;
+        }
+
+        #menuToggle span:nth-last-child(2) {
+            transform-origin: 0% 100%;
+        }
+
+        /* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+        #menuToggle input:checked~span {
+            opacity: 1;
+            transform: rotate(45deg) translate(-2px, -1px);
+            background: #232323;
+        }
+
+        /*
+ * But let's hide the middle one.
+ */
+        #menuToggle input:checked~span:nth-last-child(3) {
+            opacity: 0;
+            transform: rotate(0deg) scale(0.2, 0.2);
+        }
+
+        /*
+ * Ohyeah and the last one should go the other direction
+ */
+        #menuToggle input:checked~span:nth-last-child(2) {
+            transform: rotate(-45deg) translate(0, -1px);
+        }
+
+        /*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+        #menu {
+            position: absolute;
+            width: 300px;
+            margin: -100px 0 0 -50px;
+            padding: 50px;
+            padding-top: 125px;
+
+            background: #edededbe;
+            list-style-type: none;
+            -webkit-font-smoothing: antialiased;
+            /* to stop flickering of text in safari */
+
+            transform-origin: 0% 0%;
+            transform: translate(-100%, 0);
+
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        }
+
+        #menu li {
+            padding: 10px 0;
+            font-size: 22px;
+        }
+
+        /*
+ * And let's slide it in from the left
+ */
+        #menuToggle input:checked~ul {
+            transform: none;
+        }
+
+        .for46 {
+            padding-top: 50px;
+            text-align: center;
+        }
+
+        .for46 p {
+            font-size: 20px;
+            color: rgb(114, 117, 119);
+        }
+
+        .icon-home {
+            padding: 0;
+            margin: 0;
+            width: 20px;
+            height: 15px;
+        }
+
+        .video {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+        }
+
+        .mini-word {
+            font-size: 14px;
+            color: rgba(47, 79, 79, 0.486);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navigation">
+        <div id="menuToggle">
+            <!--
+          A fake / hidden checkbox is used as click reciever,
+          so you can use the :checked selector on it.
+          -->
+            <input type="checkbox" />
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="http://127.0.0.1:5501/graduation.html#">
+                    <li>Home</li>
+                </a>
+                <a href="http://127.0.0.1:5501/wish.html">
+                    <li>內閣祝福</li>
+                </a>
+                <a href="http://127.0.0.1:5501/video.html">
+                    <li>影片</li>
+                </a>
+                <a href="http://127.0.0.1:5501/contact.html">
+                    <li>通訊錄</li>
+                </a>
+
+            </ul>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="for46">
+            <img src="./images/1x/資產 3.png">
+            <p>久遠回憶影片</p>
+            <div class="mini-word">是千芳用心做出來的喔！</div>
+        </div>
+
+        <div class="video embed-responsive embed-responsive-16by9">
+            <iframe width="338" height="200" src="https://www.youtube.com/embed/Nex7ufymfGk"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+
+        <div class="for46">
+            <div class="mini-word">
+                不知不覺我們也一同走過，<br>
+                這一年的時間，<br>
+                或許有人會漸行漸遠，<br>
+                也可能有人成為彼此不可或缺的夥伴，<br>
+                不論如何，<br>
+                都希望大家能夠好好保存曾經的回憶！
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

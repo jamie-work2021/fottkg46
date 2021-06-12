@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上通訊錄</title>
+    <style>
+        a:hover,
+        a:visited,
+        a:focus,
+        a:active,
+        a.active {
+            text-decoration: none;
+        }
+
+        ul,
+        ol,
+        li {
+            list-style-position: inside;
+            list-style: none;
+        }
+
+        body {
+            color: #000;
+            font-size: 14px;
+            line-height: 1.4;
+            display: block;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Serif TC', serif;
+            /* background-image: linear-gradient(-245deg, #B7F8DB 0%, #50A7C2 100%); */
+        }
+
+        #container {
+            /* background: -webkit-linear-gradient(#e2d1c3 0%, #fdfcfb 50%, #E2E7ED 100%); */
+            background-image: linear-gradient(135deg, #e2d1c3 0%, #fdfcfb 100%);
+            height: 3200px;
+        }
+
+
+        #menuToggle {
+            display: block;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+
+            z-index: 1;
+
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #menuToggle a {
+            text-decoration: none;
+            color: #232323;
+
+            transition: color 0.3s ease;
+        }
+
+        #menuToggle a:hover {
+            color: rgb(17, 22, 70);
+        }
+
+
+        #menuToggle input {
+            display: block;
+            width: 40px;
+            height: 32px;
+            position: absolute;
+            top: -7px;
+            left: -5px;
+
+            cursor: pointer;
+
+            opacity: 0;
+            /* hide this */
+            z-index: 2;
+            /* and place it over the hamburger */
+
+            -webkit-touch-callout: none;
+        }
+
+        /*
+ * Just a quick hamburger
+ */
+        #menuToggle span {
+            display: block;
+            width: 33px;
+            height: 4px;
+            margin-bottom: 5px;
+            position: relative;
+
+            background: #cdcdcd;
+            border-radius: 3px;
+
+            z-index: 1;
+
+            transform-origin: 4px 0px;
+
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                opacity 0.55s ease;
+        }
+
+        #menuToggle span:first-child {
+            transform-origin: 0% 0%;
+        }
+
+        #menuToggle span:nth-last-child(2) {
+            transform-origin: 0% 100%;
+        }
+
+        /* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+        #menuToggle input:checked~span {
+            opacity: 1;
+            transform: rotate(45deg) translate(-2px, -1px);
+            background: #232323;
+        }
+
+        /*
+ * But let's hide the middle one.
+ */
+        #menuToggle input:checked~span:nth-last-child(3) {
+            opacity: 0;
+            transform: rotate(0deg) scale(0.2, 0.2);
+        }
+
+        /*
+ * Ohyeah and the last one should go the other direction
+ */
+        #menuToggle input:checked~span:nth-last-child(2) {
+            transform: rotate(-45deg) translate(0, -1px);
+        }
+
+        /*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+        #menu {
+            position: absolute;
+            width: 300px;
+            margin: -100px 0 0 -50px;
+            padding: 50px;
+            padding-top: 125px;
+
+            background: #edededb4;
+            list-style-type: none;
+            -webkit-font-smoothing: antialiased;
+            /* to stop flickering of text in safari */
+
+            transform-origin: 0% 0%;
+            transform: translate(-100%, 0);
+
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        }
+
+        #menu li {
+            padding: 10px 0;
+            font-size: 22px;
+        }
+
+        /*
+ * And let's slide it in from the left
+ */
+        #menuToggle input:checked~ul {
+            transform: none;
+        }
+
+        input,
+        button {
+            font-family: 'Roboto Slab', serif;
+            font-weight: 300;
+            font-size: 16px;
+            border: 0;
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+
+        .front p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .back p {
+            line-height: 1.7;
+
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 0.5em 0 1em 0;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #096AA3;
+        }
+
+        h2,
+        h3 {
+            font-weight: bold;
+        }
+
+        /* p {
+            margin-bottom: 1em;
+        } */
+
+        .animation {
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .wrapper {
+            width: 80%;
+            padding: 8%;
+            margin: 0 auto;
+            /* background: #fff; */
+        }
+
+        .wrapper.cards {
+            background: 0;
+            width: 88%;
+            padding: 20px 0 0 0;
+        }
+
+        .container {
+            position: relative;
+            float: left;
+            width: 48%;
+            height: 260px;
+            margin: 10px 0 10px 4%;
+            background: #fff;
+
+
+            /* Set the depth of the elements */
+            -webkit-perspective: 800px;
+            -moz-perspective: 800px;
+            -o-perspective: 800px;
+            perspective: 800px;
+        }
+
+        .container:first-child {
+            margin-left: 0;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            cursor: pointer;
+
+
+            /* Set the transition effects */
+            -webkit-transition: -webkit-transform 0.4s;
+            -moz-transition: -moz-transform 0.4s;
+            -o-transition: -o-transform 0.4s;
+            transition: transform 0.4s;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped {
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .card .front,
+        .card .back {
+            display: block;
+            height: 100%;
+            width: 100%;
+            /* line-height: 260px; */
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 4em;
+            position: absolute;
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+
+            box-shadow: 3px 5px 20px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .card .back {
+            width: 94%;
+            padding-left: 3%;
+            padding-right: 3%;
+            font-size: 16px;
+            text-align: left;
+            line-height: 25px;
+
+        }
+
+        .formItem:first-child {
+            margin-top: 20px;
+        }
+
+        .card .back label {
+            display: inline-block;
+            width: 70px;
+            text-align: left;
+        }
+
+        .card .front {
+            background: #af9a92;
+        }
+
+        .card .back {
+            background: #e0e0e0c5;
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .container:first-child .card .front {
+            background: #e6ded6;
+        }
+
+        .container:first-child .card .back {
+            background: #ffffff;
+        }
+
+        .cardTitle {
+            text-align: center;
+            font-size: 1.4em;
+            line-height: 1.2em;
+            margin: 20px 0 0 0;
+        }
+
+        .content {
+            padding: 4%;
+            font-weight: 100;
+            text-align: left;
+        }
+
+        button.btnSend {
+            display: inline-block;
+            min-width: 100px;
+            padding: 3px 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            color: #03446A;
+            background: #fff;
+            border: 0;
+            border-radius: 3;
+        }
+
+        .img-c {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+        }
+
+        .img-c img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .img-g {
+            margin: 0 auto;
+            width: 80px;
+            height: 80px;
+        }
+
+        .img-g img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+
+        }
+
+        .number {
+            text-align: left;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .phone {
+            font-size: 14px;
+        }
+
+        .birthday {
+            text-align: left;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .instagram {
+            text-align: left;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .info-p {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .for46 {
+            padding-top: 50px;
+            text-align: center;
+        }
+
+        .for46 p {
+            font-size: 20px;
+            color: rgb(114, 117, 119);
+        }
+
+        .mini-word {
+            color: rgba(15, 19, 59, 0.719);
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navigation">
+        <div id="menuToggle">
+            <!--
+          A fake / hidden checkbox is used as click reciever,
+          so you can use the :checked selector on it.
+          -->
+            <input type="checkbox" />
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="http://127.0.0.1:5501/graduation.html#">
+                    <li>Home</li>
+                </a>
+                <a href="http://127.0.0.1:5501/wish.html">
+                    <li>內閣祝福</li>
+                </a>
+                <a href="http://127.0.0.1:5501/video.html">
+                    <li>影片</li>
+                </a>
+                <a href="http://127.0.0.1:5501/contact.html">
+                    <li>通訊錄</li>
+                </a>
+
+            </ul>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="for46">
+            <img src="./images/1x/資產 2.png">
+            <p>線上通訊錄</p>
+            <div class="mini-word">
+                點擊小卡<br>
+                ps.因為有個資請小心不要將網頁外傳喔</div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">活動長</p>
+                        <p>林思伶</p>
+                        <div class="img-c">
+                            <img src="./images/celine.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0963790215
+
+                            </p>
+                            <p class="birthday">
+                                生日：02.15
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                40_celine
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">活動組員</p>
+                        <p>潘界印</p>
+                        <div class="img-c">
+                            <img src="./images/beria.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0975035113
+
+                            </p>
+                            <p class="birthday">
+                                生日：11.11
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                beria3556
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">活動組員</p>
+                        <p>陳智炫</p>
+                        <div class="img-c">
+                            <img src="./images/syuan.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0919581392
+
+                            </p>
+                            <p class="birthday">
+                                生日：10.25
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                ja870333
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">教學長</p>
+                        <p>劉庭宏</p>
+                        <div class="img-c">
+                            <img src="./images/tin.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0983074708
+
+                            </p>
+                            <p class="birthday">
+                                生日：07.04
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                skyjazz_0704
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">教學組員</p>
+                        <p>陳韻如</p>
+                        <div class="img-c">
+                            <img src="./images/yunruu.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0918280804
+
+                            </p>
+                            <p class="birthday">
+                                生日：08.04
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                yun_ru0804
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">教學組員</p>
+                        <p>朱青木</p>
+                        <div class="img-c">
+                            <img src="./images/mumu.JPG">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0933509108
+
+                            </p>
+                            <p class="birthday">
+                                生日：04.18
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                mumuzfoenn
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">機動長</p>
+                        <p>葉杰翰</p>
+                        <div class="img-c">
+                            <img src="./images/yaya.JPG">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0963511080
+
+                            </p>
+                            <p class="birthday">
+                                生日：04.09
+                            </p>
+                            <p class="instagram">
+                                ig：
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">機動組員</p>
+                        <p>周易萱</p>
+                        <div class="img-c">
+                            <img src="./images/yiyuan.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0905191989
+
+                            </p>
+                            <p class="birthday">
+                                生日：02.20
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                yi_hsuan_0220
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">機動組員</p>
+                        <p>謝祥誌</p>
+                        <div class="img-c">
+                            <img src="./images/hsan.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0975292132
+
+                            </p>
+                            <p class="birthday">
+                                生日：03.14
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                hs1an
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">事務組長</p>
+                        <p>何佳玟</p>
+                        <div class="img-c">
+                            <img src="./images/chiawen.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0987572565
+
+                            </p>
+                            <p class="birthday">
+                                生日：.06.03
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                chia__wen__
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">事務組員</p>
+                        <p>林凱泓</p>
+                        <div class="img-c">
+                            <img src="./images/linkai.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0963637907
+
+                            </p>
+                            <p class="birthday">
+                                生日：02.22
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                linkou_hong
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">事務組員</p>
+                        <p>吳冠俞</p>
+                        <div class="img-c">
+                            <img src="./images/vito.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0972937577
+
+                            </p>
+                            <p class="birthday">
+                                生日：02.17
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                vito44556
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">美宣長</p>
+                        <p>王瑄</p>
+                        <div class="img-c">
+                            <img src="./images/wang.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0960050919
+
+                            </p>
+                            <p class="birthday">
+                                生日：09.19
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                19.uan
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">美宣組員</p>
+                        <p>劉睿成</p>
+                        <div class="img-c">
+                            <img src="./images/ryan.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0937477158
+
+                            </p>
+                            <p class="birthday">
+                                生日：01.15
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                bbrriiaannliu
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">美宣組員</p>
+                        <p>林佩萱</p>
+                        <div class="img-c">
+                            <img src="./images/pei.jpg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：
+
+                            </p>
+                            <p class="birthday">
+                                生日：06.24
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                shelly_lin624___
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">社長</p>
+                        <p>林思翰</p>
+                        <div class="img-c">
+                            <img src="./images/han.png">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0978613917
+
+                            </p>
+                            <p class="birthday">
+                                生日：11.15
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                linsh_1115
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">副社長</p>
+                        <p>黃千芳</p>
+                        <div class="img-c">
+                            <img src="./images/fang.png">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0936374246
+
+                            </p>
+                            <p class="birthday">
+                                生日：03.17
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                _____fang_
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">執行秘書</p>
+                        <p>簡辰珊</p>
+                        <div class="img-c">
+                            <img src="./images/shan.png">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0939749043
+
+                            </p>
+                            <p class="birthday">
+                                生日：12.09
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                jamie_861209
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper cards">
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <p class="cardTitle">總幹事</p>
+                        <p>馬紹凱</p>
+                        <div class="img-c">
+                            <img src="./images/kai.jpeg">
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="content">
+                            <p class="cardTitle info-p">資訊小卡</p>
+                            <div class="img-g">
+                                <img src="./images/159362.svg">
+                            </div>
+                            <p class="number">
+                                手機：0907241977
+
+                            </p>
+                            <p class="birthday">
+                                生日：07.27
+                            </p>
+                            <p class="instagram">
+                                ig：
+                                kevin086727
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $('.card').click(function () {
+            $(this).toggleClass('flipped');
+        });
+    </script>
+</body>
+
+</html>

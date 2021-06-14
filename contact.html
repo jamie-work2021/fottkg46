@@ -317,7 +317,7 @@
         }
 
         .card .back {
-            background: #e0e0e0c5;
+            background: #e0e0e0;
             -webkit-transform: rotateY(180deg);
             -moz-transform: rotateY(180deg);
             -o-transform: rotateY(180deg);
@@ -424,6 +424,84 @@
 
         .mini-word {
             color: rgba(15, 19, 59, 0.719);
+        }
+
+        @media screen and (min-width: 961px) and (max-width: 1940px) {
+
+
+            #menu {
+                position: absolute;
+                width: 300px;
+                height: 100vh;
+                margin: -100px 0 0 -50px;
+                padding: 50px;
+                padding-top: 125px;
+
+                background: #edededbe;
+                list-style-type: none;
+                -webkit-font-smoothing: antialiased;
+                /* to stop flickering of text in safari */
+
+                transform-origin: 0% 0%;
+                transform: translate(-100%, 0);
+
+                transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            }
+
+            .for46 {
+                padding-top: 50px;
+                text-align: center;
+            }
+
+            .for46 p {
+                font-size: 30px;
+                color: rgb(114, 117, 119);
+            }
+
+            .icon-home {
+                padding: 0;
+                margin: 0;
+                width: 20px;
+                height: 15px;
+            }
+
+
+
+            .mini-word {
+                font-size: 22px;
+                color: rgba(47, 79, 79, 0.486);
+                line-height: 1.7;
+            }
+
+            .front p {
+                font-size: 24px;
+            }
+
+            .back p {
+                text-align: center;
+            }
+
+            .content {
+                padding: 2%;
+            }
+
+            .info-p {
+                margin: 0;
+                font-size: 24px;
+            }
+
+            .number {
+                font-size: 22px;
+            }
+
+            .birthday {
+                font-size: 22px;
+            }
+
+            .instagram {
+                font-size: 22px;
+            }
+
         }
     </style>
 </head>
